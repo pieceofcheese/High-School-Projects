@@ -1,0 +1,151 @@
+package chess;
+
+import java.util.ArrayList;
+
+public class Checker extends Check {
+	
+	public Checker(ArrayList<Piece> x) {
+		
+		super(x);
+		
+	}
+	
+	public boolean moveCheck(int startX, int startY, int endX, int endY, byte[][] board) {
+		
+		//set up what the piece is
+		int piece = (int)board[startY][startX]%10;
+		int side = (int)board[startY][startX]/10;
+		
+		if(piece == 5) {
+			
+			return kingMoveCheck(startX, startY, endX, endY, board);
+			
+		} else {
+			
+			//for side 1
+			if (side == 1) {
+				
+				//figure out where king is
+				int kingY;
+				int kingX;
+				
+				for(int x = 0; x<8; x++) {
+					
+					for(int y = 0; y<8; y++) {
+						
+						if(board[y][x]%10==5&&board[y][x]/10==1) {
+							
+							kingY = y;
+							kingX = x;
+							
+						}
+						
+					}
+					
+				}
+				
+				//do danger for moving piece
+				super.dangerClear(startX, startY, board);
+				super.dangerSet(endX, endY, board);
+				
+				//redo danger
+				for(int x = 0; x<8; x++) {
+					
+					for(int y = 0; y<8; y++) {
+						
+						if(board[y][x]/10==2) {
+							
+							super.dangerClear(x, y, board);
+							
+						}
+						
+					}
+					
+				}
+				
+			} else {
+				
+				if(side == 2) {
+					
+					int kingY;
+					int kingX;
+					
+					for(int x = 0; x<8; x++) {
+						
+						for(int y = 0; y<8; y++) {
+							
+							if(board[y][x]%10==5&&board[y][x]/10==2) {
+								
+								kingY = y;
+								kingX = x;
+								
+							}
+							
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public boolean kingMoveCheck(int startX, int startY, int endX, int endY, byte[][] board) {
+		
+			
+		if (checkDanger(endX, endY, board[startY][startX/10])) {
+				
+			return false;
+				
+		}
+			
+		super.dangerClear(startX, startY, board);
+		super.dangerSet(endX, endY, board);
+		
+		return true;
+		
+	}
+	
+	public boolean checkDanger(int x, int y, int side) {
+		
+		if(side==1) {
+			
+			if(super.getDanger1(x, y)>=1) {
+				
+				return true;
+				
+			}
+			
+		} else {
+			
+			if(super.getDanger2(x, y)>=1) {
+				
+				return true;
+				
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
+	public void setDangerAll(byte[][] board) {
+		
+		for(int x = 0; x<8; x++) {
+			
+			for(int y = 0; y<8; y++) {
+				
+				super.dangerClear(x, y, board);
+				super.dangerSet(x, y, board);
+				
+			}
+			
+		}
+		
+	}
+
+}

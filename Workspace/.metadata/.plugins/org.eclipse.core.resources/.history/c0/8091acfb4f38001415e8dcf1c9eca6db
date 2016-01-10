@@ -1,0 +1,15 @@
+package exercises;
+
+import java.io.*;
+import java.util.*;
+
+public class AlphNames {
+
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+
+		
+		
+	}
+
+}

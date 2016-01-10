@@ -1,0 +1,28 @@
+package test_11;
+
+public class Actor {
+	
+	public Actor(String names){
+		
+		name=names;
+		
+	}
+	
+	public void addRevenue(int rev) {
+		
+		revenue+= rev;
+		movies++;
+		
+	}
+	
+	public float avgRevenue() {
+		
+		return revenue/movies;
+		
+	}
+	
+	String name;
+	float revenue;
+	int movies=0;
+
+}

@@ -1,0 +1,27 @@
+import java.util.LinkedList;
+
+
+public class P202 {
+
+	public static void main(String[] args) {
+		
+		
+		
+	}
+	
+	public static void reverse(LinkedList<String> staff) {
+		
+		int index = staff.size();
+		
+		for(int x = 1; x<=staff.size(); x++) {
+			
+			String s = staff.remove();
+			staff.add(index, s);
+			
+			index--;
+			
+		}
+		
+	}
+	
+}
