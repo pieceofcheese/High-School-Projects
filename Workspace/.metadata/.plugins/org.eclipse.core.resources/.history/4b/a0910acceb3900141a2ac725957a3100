@@ -1,0 +1,136 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		//scanner printwriter etc.
+		Scanner scan = new Scanner(new File("H:\\ComSci\\GutenbergShort.txt"));
+		FileWriter fw = new FileWriter("H:\\ComSci\\Gutenber.txt");
+		PrintWriter print = new PrintWriter(fw);
+		int total=0;
+		
+		ArrayList<Word> words = new ArrayList<Word>();
+		
+		//go through book
+		while(scan.hasNext()) {
+			
+			//go to lower case
+			String s = scan.next().toLowerCase();
+
+			//take away useless format
+			s=removePointless(s);	
+			
+			//check length 
+			if(s.length()>=3) {
+			
+				//check if duplicate
+				for(int x = 0; x<words.size(); x++) {
+					
+					//yes
+					if(s.equalsIgnoreCase(words.get(x).word)){
+						
+						words.get(x).addCount();
+						
+					} else {
+						
+					}
+					
+				}
+				
+				total++;
+				
+			}
+			
+		}
+		
+	}
+	
+	public static String removePointless(String text) {
+		
+		//get word
+		char arrayInit[] = text.toCharArray();
+		
+		//make char array out
+		ArrayList<Character> array = new ArrayList<Character>();
+		
+		//initialize return 
+		String fin = "";
+		
+		//go through char array
+		for(int x = 0; x<arrayInit.length; x++) {
+
+			switch(arrayInit[x]) {
+			
+			case '.':  break;
+			
+			case '_': break;
+			
+			case '[': break;
+			
+			case ']': break;
+			
+			case '|': break;
+			
+			case '*': break;
+			
+			case ',': break;
+			
+			case ':': break;
+			
+			case '"': break;
+			
+			case '-': break;
+			
+			case '(': break;
+			
+			case ')': break;
+			
+			case '?': break;
+			
+			case ';': break;
+
+			case '0': break;
+
+			case '1': break;
+
+			case '2': break;
+
+			case '3': break;
+
+			case '4': break;
+
+			case '5': break;
+
+			case '6': break;
+
+			case '7': break;
+
+			case '8': break;
+
+			case '9': break;
+
+			case '\'': break;
+
+			default: array.add(arrayInit[x]);
+						break;
+			
+			}
+				
+			
+		}
+		
+		for(int x = 0; x<array.size(); x++) {
+			
+			fin += array.get(x);
+			
+		}
+		
+		return fin;
+			
+	}
+
+}

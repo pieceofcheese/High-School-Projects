@@ -1,0 +1,532 @@
+package chess;
+
+import java.util.ArrayList;
+
+public class ChessBoard extends Board {
+	
+	//constructor
+	public ChessBoard() {
+		
+		//generate chessboard
+		super();
+		super.board = new byte[][] { {21, 22, 23, 24, 25, 23, 22, 21}, 
+									{20, 20, 20, 20, 20, 20, 20, 20},
+									{0, 1, 0, 1, 0, 1, 0, 1},
+									{1, 0, 1, 0, 1, 0, 1, 0},
+									{0, 1, 0, 1, 0, 1, 0, 1},
+									{1, 0, 1, 0, 1, 0, 1, 0},
+									{10, 10, 10, 10, 10, 10, 10, 10},
+									{11, 12, 13, 14, 15, 13, 12, 11} }; 
+		
+		//build arrays
+		moved = new byte[8][8];
+		
+		//fill arrayList
+		Pawn p = new Pawn();
+		pieces.add(p);
+		
+		Rook r = new Rook();
+		pieces.add(r);
+		
+		Knight k = new Knight();
+		pieces.add(k);
+		
+		Bishop b = new Bishop();
+		pieces.add(b);
+		
+		Queen q = new Queen();
+		pieces.add(q);
+		
+		King K = new King();
+		pieces.add(K);
+		
+		for(int x = 0; x<8; x++) {
+			
+			for(int y = 2; y<6; y++) {
+				
+				moved[y][x] = 1;
+				
+			}
+			
+		}
+		
+		//initialize class which handles checking
+		check = new Check(pieces);
+			
+		for(int x = 0; x<8; x++) {
+				
+			check.dangerSet(x, 1, board);
+			check.dangerSet(x, 6, board);
+				
+		}
+		
+		lastMovedY = -1;
+		lastMovedX= -1;
+		
+	}
+	
+	//move decision
+	public boolean move(int startX, int startY, int endX, int endY) {
+				
+		int side = board[startY][startX]/10;
+		int piece = board[startY][startX]%10;
+						
+		//check if there is a piece there
+		if (side>0) {
+							
+			//check if the space is clear
+			if(board[endY][endX]==0||board[endY][endX]==1) {
+								
+				if(pieceMove(pieces.get(piece), startX, startY, endX, endY)) {
+							
+					movePieces(startX, startY, endX, endY);
+									
+					if(side==1) {
+										
+						if(endY==0) {
+											
+							piecePromote(pieces.get(piece));
+											
+						} 
+										
+					} else {
+										
+						if(endY==7) {
+											
+							piecePromote(pieces.get(piece));
+											
+						}
+										
+					}
+					
+					return true;
+							
+				}
+								
+			}	
+					
+		} else {
+					
+			System.out.println("There is no piece there");
+					
+		}
+		
+		return false;
+				
+	}
+	
+	//unboxing to get movement method
+	private boolean pieceMove(Piece x,int startX, int startY, int endX, int endY) {
+		
+		if(x.move(startX, startY, endX, endY, board, moved)) {
+		
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
+	
+	//method to capture
+	public boolean capture(int startX, int startY, int endX, int endY) {
+		
+		//check if it's in array size
+		if(endX<8&&endX>=0) {
+			
+			if(endY<8&&endY>=0) {
+				
+				if(startX<8&&startX>=0) {
+							
+					if(startY<8&&startY>=0) {
+						
+						int side = board[startY][startX]/10;
+						int piece = board[startY][startX]%10;
+						
+						//for not pawns
+						if(piece!=0&&side>0) {
+							
+							//check if there is a piece there
+							if (side==2) {
+										
+								//check if the space has an opponent
+								if(board[endY][endX]/10==1) {
+											
+									if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+										
+										movePieces(startX, startY, endX, endY);
+										
+										return true;
+										
+									}
+											
+								} else {
+									
+									return move(startX, startY, endX, endY);
+									
+								}
+								
+							} else {
+								
+								if(side==1) {
+									
+									//check if the space has an opponent
+									if(board[endY][endX]/10==2) {
+										
+										//do the movement check for the piece
+										if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+											
+											movePieces(startX, startY, endX, endY);
+											
+											return true;
+											
+										}
+												
+									} else {
+										
+										return move(startX, startY, endX, endY);
+										
+									}	
+									
+								} 
+								
+							}
+							
+						} else {
+							
+							//for pawns
+							return pawnCapture(startX, startY, endX, endY, side, piece);
+							
+						}
+						
+					}
+						
+				}
+						
+			}
+					
+		}
+		
+		return false;
+		
+	}
+	
+	//method to print the board in an easy to see fashion
+	public void printBoard() {
+		
+		System.out.println("    a " + " b " + " c " + " d " + " e " + " f " + " g " + " h \n");
+		
+		for(int y = 0; y<board.length; y++) {
+			
+			System.out.print(Math.abs(y-8) + "   ");
+			
+			for(int x = 0; x<board[y].length; x++) {
+				
+				//initialize some variables
+				int side = board[y][x]/10;
+				int piece = board[y][x]%10;
+				
+				//if white piece
+				if(side==1) {
+					
+					System.out.print("W" + numToChar(piece) + " " );
+					
+				} else {
+					
+					//if black piece
+					if(side==2) {
+						
+						System.out.print("B" + numToChar(piece) + " " );
+					
+					//if empty space
+					} else {
+						
+						System.out.print(" " + board[y][x] + " ");
+						
+					}
+					
+				}
+				
+			}
+			
+			System.out.print("   " + Math.abs(y-8));
+			
+			System.out.println();
+			
+		}
+		
+		System.out.println("\n    a " + " b " + " c " + " d " + " e " + " f " + " g " + " h ");
+		
+	}
+
+	//unboxing to do capture method
+	private boolean pieceCapture(Piece x,int startX, int startY, int endX, int endY) {
+		
+		if(x.capture(startX, startY, endX, endY, board, moved)) {
+			
+			return true;
+			
+		}
+		
+		
+		return false;
+	
+	}
+	
+	//unboxing for promotion method
+	private void piecePromote(Piece x) {
+		
+		x.promote(lastMovedX, lastMovedY, board);
+		
+	}
+	
+	//method to make the capture method look nicer
+	private boolean pawnCapture(int startX, int startY, int endX, int endY, int side, int piece) {
+		
+		//for pawns
+		try {
+			//check if en passant is do able
+			if(board[lastMovedY][lastMovedX]%10==0&&endX==lastMovedX) {
+				
+				if(board[endY][endX]<=1) {
+						
+					if(side==1) {
+							
+						//check if piece is in reach
+						if(lastMovedY-endY<=1&&lastMovedY-endY>=0) {
+								
+							if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+									
+								emptySpace(lastMovedX, lastMovedY);
+									
+								movePieces(startX, startY, endX, endY);
+									
+								if(endY==0) {
+											
+									piecePromote(pieces.get(piece));
+											
+								}
+								
+								return true;
+									
+							}
+								
+						}
+							
+					} else {
+							
+						//check if piece is in reach
+						if(lastMovedY-endY==-1&&lastMovedY-endY<=0) {
+								
+							if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+									
+								emptySpace(lastMovedX, lastMovedY);
+									
+								movePieces(startX, startY, endX, endY);
+										
+								if(endY==7) {
+											
+									piecePromote(pieces.get(piece));
+											
+								}
+								
+								return true;
+									
+							}
+								
+						}
+							
+					}
+						
+				} 
+				
+				return move(startX, startY, endX, endY);
+				
+			//do when en passant is not do able
+			} else {
+					
+				if(side==1) {
+					
+					if(board[endY][endX]/10==2) {
+						
+						if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+							
+							movePieces(startX, startY, endX, endY);
+								
+							if(endY==0) {
+										
+								piecePromote(pieces.get(piece));
+										
+							}
+							
+							return true;
+								
+						}
+						
+					} else {
+						
+						return move(startX, startY, endX, endY);
+						
+					}
+					
+				} else {
+					
+					if(board[endY][endX]/10==1) {
+						
+						if(pieceCapture(pieces.get(piece), startX, startY, endX, endY)) {
+							
+							movePieces(startX, startY, endX, endY);
+								
+							if(endY==7) {
+										
+								piecePromote(pieces.get(piece));
+										
+							}
+							
+							return true;
+								
+						}
+						
+					} else {
+						
+						return move(startX, startY, endX, endY);
+						
+					}
+						
+				}
+					
+			}
+		
+		}
+		
+		catch(ArrayIndexOutOfBoundsException e) {
+			
+			return move(startX, startY, endX, endY);
+			
+		}
+		
+		
+		return false;
+			
+	}
+	
+	//method that changes coordinates
+	private void movePieces(int startX, int startY, int endX, int endY) {
+		
+		//do normal movement check
+		board[endY][endX] = board[startY][startX];
+		moved[startY][startX] = 1;
+		lastMovedX=endX;
+		lastMovedY=endY;
+		
+		emptySpace(startX, startY);
+		
+	}
+	
+	//method which fills empty space
+	private void emptySpace(int startX, int startY) {
+		
+		if((startX+startY)%2!=0) {
+			
+			board[startY][startX] = 1;
+			
+		} else {
+			
+			board[startY][startX] = 0;
+			
+		}
+		
+	}
+	
+	//interpreter for printing
+	private String numToChar(int piece) {
+		
+		switch(piece) {
+		
+		case 0:
+			
+			return "P";
+			
+		case 1:
+			
+			return "R";
+			
+		case 2:
+			
+			return "N";
+			
+		case 3:
+			
+			return "B";
+			
+		case 4:
+			
+			return "Q";
+			
+		case 5:
+			
+			return "K";
+			
+		default:
+			
+			System.out.println("Something wrong has happened");
+		
+		}
+		
+		return null;
+		
+	}
+	
+	//interpreter for coordinates
+	public static int coordGrab(String x) {
+		
+		int coordX=0, coordY=0;
+		
+		try {
+		
+			coordX = Character.toLowerCase(x.charAt(0));
+			coordY = x.charAt(1);
+			
+		}
+		
+		catch(IllegalArgumentException e) {
+			
+			return -1;
+			
+		}
+		
+		coordY = coordY-49;
+		coordX = coordX-97;
+		coordY = Math.abs(7-coordY);
+		
+		int coord = coordX*10 + coordY;
+		
+		
+		return coord;
+		
+	}
+	
+	public boolean check() {
+		
+		return false;
+	}
+
+	public boolean checkmate() {
+		
+		return false;
+	}
+	
+	public void setPiece(int startX, int startY, int endX, int endY) {
+		
+		movePieces(startX, startY, endX, endY);
+		
+	}
+
+	
+	//extra variables
+	private Check check;
+	private byte[][] moved;
+	private ArrayList<Piece> pieces =new ArrayList<Piece>();
+	private int lastMovedX, lastMovedY;
+	
+}

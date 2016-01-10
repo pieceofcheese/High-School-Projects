@@ -1,0 +1,160 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		//scanner printwriter etc.
+		Scanner scan = new Scanner(new File("H:\\ComSci\\GutenbergShort.txt"));
+		FileWriter fw = new FileWriter("H:\\ComSci\\Gutenber.txt");
+		PrintWriter print = new PrintWriter(fw);
+		int total=0;
+		boolean arrayFill = true;
+		
+		ArrayList<Word> words = new ArrayList<Word>();
+		
+		//go through book
+		while(scan.hasNext()) {
+			
+			//go to lower case
+			String s = scan.next().toLowerCase();
+			
+			System.out.println(s);
+
+			//take away useless format
+			s=removePointless(s);
+			
+			//check length 
+			if(s.length()>=3) {
+				
+				if(arrayFill) {
+					Word temp = new Word(s);
+					words.add(temp);
+					
+				}
+
+				//check if duplicate
+				for(int x = 0; x<words.size(); x++) {
+					
+					System.out.println(s);
+					
+					//yes
+					if(s.equalsIgnoreCase(words.get(x).word)){
+						
+						words.get(x).addCount();
+						
+					} else {
+						
+						Word word = new Word(s);
+						
+					}
+					
+				}
+				
+				total++;
+				
+			}
+			
+		}
+		
+		for(int x = 0; x<words.size(); x++) {
+			
+			System.out.println(words.get(x).word + " count: " + words.get(x).count);			
+			print.println(words.get(x).word + " count: " + words.get(x).count);
+			
+		}
+		
+		print.close();
+		fw.close();
+		scan.close();
+		
+	}
+	
+	public static String removePointless(String text) {
+		
+		//get word
+		char arrayInit[] = text.toCharArray();
+		
+		//make char array out
+		ArrayList<Character> array = new ArrayList<Character>();
+		
+		//initialize return 
+		String fin = "";
+		
+		//go through char array
+		for(int x = 0; x<arrayInit.length; x++) {
+
+			switch(arrayInit[x]) {
+			
+			case '.':  break;
+			
+			case '_': break;
+			
+			case '[': break;
+			
+			case ']': break;
+			
+			case '|': break;
+			
+			case '*': break;
+			
+			case ',': break;
+			
+			case ':': break;
+			
+			case '"': break;
+			
+			case '-': break;
+			
+			case '(': break;
+			
+			case ')': break;
+			
+			case '?': break;
+			
+			case ';': break;
+
+			case '0': break;
+
+			case '1': break;
+
+			case '2': break;
+
+			case '3': break;
+
+			case '4': break;
+
+			case '5': break;
+
+			case '6': break;
+
+			case '7': break;
+
+			case '8': break;
+
+			case '9': break;
+
+			case '\'': break;
+
+			default: array.add(arrayInit[x]);
+						break;
+			
+			}
+				
+			
+		}
+		
+		for(int x = 0; x<array.size(); x++) {
+			
+			fin += array.get(x);
+			
+		}
+		
+		return fin;
+			
+	}
+
+}

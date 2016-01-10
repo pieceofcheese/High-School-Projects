@@ -1,0 +1,89 @@
+package test_11;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Tester {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+public static void addRevAct() {
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("");
+		int i = checkNames();
+		System.out.println("st");
+		Actor temp = list.get(i);
+		boolean quit = false;
+		
+		while(quit==false) {
+			
+			System.out.println("How much do you want to add? (Type \"Q\" to quit");
+			
+			String s = scan.next();
+			
+			try{
+				
+				int rev = Integer.parseInt(s);
+				temp.addRevenue(rev);
+				
+			}
+			
+			catch(RuntimeException e) {
+				
+				if(s.equalsIgnoreCase("q")) {
+					quit = true;
+				}
+			}
+			
+		}
+		
+		list.remove(i);
+		
+		list.add(temp);
+		
+		
+	}
+public static int checkNames() {
+	
+	boolean quit = false;
+	Scanner scan = new Scanner(System.in);
+	int index= -1;
+	while(quit==false) {
+		
+		System.out.println("Choose an actor from below");
+		for(int x = 0; x<=list.size(); x++) {
+			
+			System.out.println(list.get(x).name);
+			System.out.println("lol");
+		}
+		System.out.println("lol");
+		String s = "Jason Statham";
+		
+		for(int x = 0; x<=list.size(); x++) {
+			
+			if(s.equals(list.get(x).name)) {
+				
+				
+				index = x;
+				quit = true;
+				
+			}
+			
+		}
+		
+		if(index==-1) {
+			
+			System.out.println("Please print the name exactly");
+			
+		}
+		static LinkedList<Actor> list;
+	}
+	
+	
+	return index;
+	
+}
+}

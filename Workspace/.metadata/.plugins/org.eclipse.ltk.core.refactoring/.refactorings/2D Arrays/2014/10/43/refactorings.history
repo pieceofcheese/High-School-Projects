@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;BankAccount.java&apos; to &apos;Graphics/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;2D Arrays&apos;&#x0D;&#x0A;- Destination element: &apos;Graphics/src/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;big_Bucks.BankAccount.java&apos;" description="Copy compilation unit" destination="=Graphics/src&lt;" element1="/src&lt;big_Bucks{BankAccount.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1414011360098" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,88 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		Scanner scan = new Scanner(new File("H:\\ComSci\\Gutenberg.txt"));
+		
+		while(scan.hasNext()) {
+			
+			System.out.println(removePointless(scan.next()));
+			
+			
+		}
+		
+	}
+	
+	public static String removePointless(String text) {
+		
+		char arrayInit[] = text.toCharArray();
+		ArrayList<Character> array = new ArrayList<Character>();
+		String fin;
+		
+		for(int x = 0; x<arrayInit.length; x++) {
+			
+			for(int s = 33; s<97; s++) {
+				
+				char test = String.toString(s).toCharArray();
+				
+			}
+			
+			switch(arrayInit[x]) {
+			
+			case '.':  break;
+			
+			case '_': break;
+			
+			case '[': break;
+			
+			case ']': break;
+			
+			case '|': break;
+			
+			case '*': break;
+			
+			case ',': break;
+			
+			case ':': break;
+			
+			case '"': break;
+			
+			case '-': break;
+			
+			case '(': break;
+			
+			case ')': break;
+			
+			case '?': break;
+			
+			case ';': break;
+			
+			
+			
+			default: array.add(arrayInit[x]);
+						break;
+			
+			}
+			
+		}
+		
+		arrayInit = new char[array.size()];
+		
+		for(int x =0; x<array.size(); x++) {
+			
+			arrayInit[x] = array.get(x);
+			
+		}
+		
+		fin = new String(arrayInit);
+		
+		return fin;
+			
+	}
+
+}

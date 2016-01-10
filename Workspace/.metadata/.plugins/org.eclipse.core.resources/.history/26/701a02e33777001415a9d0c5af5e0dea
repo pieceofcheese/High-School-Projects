@@ -1,0 +1,124 @@
+package test_11;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Tester {
+	static LinkedList<Actor> list;
+	public static void main(String[] args) {
+		//make list
+				list = new LinkedList<Actor>();
+				//set up scanner
+				Scanner scan1 = new Scanner(new File(source));
+				//set up dummy actor
+				Actor act = null;
+				
+				//fill dummy actor
+				while(scan1.hasNext()) {
+					
+					//decision on whether add money or new actor
+					if(scan1.hasNextFloat()) {
+						
+						act.addRevenue(scan1.nextFloat());
+						
+					} else {
+						String s = scan1.next() + " " + scan1.next();
+						
+						if(act==null) {
+							act = new Actor(s);
+						} else {
+							
+							list.add(act);
+							act = new Actor(s);
+							
+						}
+						
+					}
+					
+				}
+				
+				list.add(act);
+				
+				//close scanner
+				scan1.close();
+
+	}
+public static void addRevAct() {
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("");
+		int i = checkNames();
+		System.out.println("st");
+		Actor temp = list.get(i);
+		boolean quit = false;
+		
+		while(quit==false) {
+			
+			System.out.println("How much do you want to add? (Type \"Q\" to quit");
+			
+			String s = scan.next();
+			
+			try{
+				
+				int rev = Integer.parseInt(s);
+				temp.addRevenue(rev);
+				
+			}
+			
+			catch(RuntimeException e) {
+				
+				if(s.equalsIgnoreCase("q")) {
+					quit = true;
+				}
+			}
+			
+		}
+		
+		list.remove(i);
+		
+		list.add(temp);
+		
+		
+	}
+public static int checkNames() {
+	
+	boolean quit = false;
+	Scanner scan = new Scanner(System.in);
+	int index= -1;
+	while(quit==false) {
+		
+		System.out.println("Choose an actor from below");
+		for(int x = 0; x<=list.size(); x++) {
+			
+			System.out.println(list.get(x).name);
+			System.out.println("lol");
+		}
+		System.out.println("lol");
+		String s = "Jason Statham";
+		
+		for(int x = 0; x<=list.size(); x++) {
+			
+			if(s.equals(list.get(x).name)) {
+				
+				
+				index = x;
+				quit = true;
+				
+			}
+			
+		}
+		
+		if(index==-1) {
+			
+			System.out.println("Please print the name exactly");
+			
+		}
+		
+	}
+	
+	
+	return index;
+	
+}
+}

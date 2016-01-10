@@ -1,0 +1,43 @@
+package test_11;
+
+import java.util.ArrayList;
+
+public class Actor {
+	
+	public Actor(String names){
+		
+		name=names;
+		
+	}
+	
+	public void addRevenue(float f) {
+		
+		revenue.add(f);
+		movies++;
+		
+	}
+	
+	public float avgRevenue() {
+		
+		float total;
+		
+		for(int x=0; x<revenue.size(); x++) {
+			
+			total=revenue.get(x);
+			
+		}
+		
+		return total/revenue.size();
+		
+	}
+	
+	public float getrevenue(){
+		
+		return revenue;
+	}
+	
+	String name;
+	ArrayList<Float> revenue;
+	int movies=0;
+
+}

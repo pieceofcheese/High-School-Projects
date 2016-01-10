@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;&apos; to &apos;GutenbergSort.bubbleSort()&apos;&#x0D;&#x0A;- Original project: &apos;Gutenberg&apos;&#x0D;&#x0A;- Destination element: &apos;GutenbergSort.bubbleSort()&apos;&#x0D;&#x0A;- Original element: &apos;GutenbergSort.removePointless(...)&apos;&#x0D;&#x0A;- Textual move only&#x0D;&#x0A;- Update references to refactored element" description="Move method" destination="/src&lt;{GutenbergSort.java[GutenbergSort~bubbleSort" element1="/src&lt;{GutenbergSort.java[GutenbergSort~removePointless~QString;" flags="589830" id="org.eclipse.jdt.ui.move" members="1" policy="org.eclipse.jdt.ui.moveMembers" stamp="1411500263476" version="1.0"/>
+</session>

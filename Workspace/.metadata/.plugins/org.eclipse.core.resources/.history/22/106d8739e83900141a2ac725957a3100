@@ -1,0 +1,106 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		Scanner scan = new Scanner(new File("H:\\ComSci\\GutenbergShort.txt"));
+		
+		while(scan.hasNext()) {
+			
+			System.out.println(removePointless(scan.next()));
+			
+			
+		}
+		
+	}
+	
+	public static String removePointless(String text) {
+		
+		//get word
+		char arrayInit[] = text.toCharArray();
+		
+		//make char array out
+		ArrayList<Character> array = new ArrayList<Character>();
+		
+		//initialize return 
+		String fin = "";
+		
+		//go through char array
+		for(int x = 0; x<arrayInit.length; x++) {
+
+			boolean sd = false;
+			
+			for(Integer s = 33; s<64; s++) {
+				
+
+				char nextChar = 's';
+				Character chara;
+				
+				//get ascii symbol
+				String m = Integer.toBinaryString(s);
+				nextChar = (char)Integer.parseInt(m.substring(0, 6), 2);
+				
+				chara = nextChar;
+				if(chara.equals(arrayInit[x])) {
+					
+					sd = true;
+					
+				}
+				
+				if(!sd) {
+					
+					fin += arrayInit[x];
+					
+				}
+			
+			}
+			
+			
+			/*switch(arrayInit[x]) {
+			
+			case '.':  break;
+			
+			case '_': break;
+			
+			case '[': break;
+			
+			case ']': break;
+			
+			case '|': break;
+			
+			case '*': break;
+			
+			case ',': break;
+			
+			case ':': break;
+			
+			case '"': break;
+			
+			case '-': break;
+			
+			case '(': break;
+			
+			case ')': break;
+			
+			case '?': break;
+			
+			case ';': break;
+			
+			
+			
+			default: array.add(arrayInit[x]);
+						break;
+			
+			}*/
+			
+		}
+		
+		return fin;
+			
+	}
+
+}

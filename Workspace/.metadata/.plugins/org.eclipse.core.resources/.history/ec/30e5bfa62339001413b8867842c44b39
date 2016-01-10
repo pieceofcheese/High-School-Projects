@@ -1,0 +1,29 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		Scanner scan = new Scanner(new File("H:\\ComSci\\GutenbergShort.txt"));
+		
+		while(scan.hasNext()) {
+			
+			System.out.println(removePointless(scan.next()));
+			
+			
+		}
+		
+	}
+	
+	public String removePointless(String text) {
+		
+		
+		
+		return text;
+			
+	}
+
+}

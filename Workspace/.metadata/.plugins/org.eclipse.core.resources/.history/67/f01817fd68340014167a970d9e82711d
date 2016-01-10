@@ -1,0 +1,67 @@
+package diamond;
+
+import java.util.Scanner;
+
+public class Diamond {
+	
+	public static void main(String[] args) {
+		
+		int amount;
+
+		int count = 1;
+		int count2 = 1;
+		Scanner scan = new Scanner(System.in);
+		
+		amount = scan.nextInt();
+		
+		for(int x = 0; x<amount; x++) {
+			
+			
+			
+			for(int y = 0; y<amount-count2; y++) {
+				
+				System.out.print(" ");
+				
+			}
+			
+			for(int y = 0; y<count; y++) {
+				
+				System.out.print("*");
+				
+			}
+			
+			System.out.println("");
+			
+			count += 2;
+			count2 += 1;
+			
+		}
+		
+		count -= 2;
+		
+		for(int x = 0; x<amount-1; x++) {
+			
+			count += -2;
+
+			count2 -= 1;
+			
+			for(int y = 0; y<amount-count2; y++) {
+				
+				System.out.print(" ");
+				
+			}
+			
+			for(int y = 0; y<count; y++) {
+				
+				System.out.print("*");
+				
+			}
+			
+			System.out.println("");
+
+		}
+		
+		
+	}
+
+}
